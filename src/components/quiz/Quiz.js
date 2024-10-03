@@ -12,7 +12,6 @@ function Quiz() {
   const [hoveredOption, setHoveredOption] = useState(null);
   const navigate = useNavigate();
 
-  // Fetch questions based on the topic
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -40,7 +39,6 @@ function Quiz() {
     }
   };
 
-  // Post score to the backend when the quiz finishes
   useEffect(() => {
     if (isFinished) {
       const postScore = async () => {
@@ -49,7 +47,7 @@ function Quiz() {
             score: score,
             topic: topic
           });
-          navigate(`/result/${topic}`); // Redirect to result page after posting score
+          navigate(`/result/${topic}`); 
           console.log(score);
         } catch (error) {
           console.error('Error posting score:', error);

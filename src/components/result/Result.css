@@ -18,11 +18,9 @@ html, body {
     text-align: center;
     font-family: 'Arial', sans-serif; 
     transition: all 0.3s ease;
-    /* height: calc(100vh - 100px);  */
     margin-top: 10%;
   }
   
- 
   .score-heading {
     font-size: 28px;
     color: #333;
@@ -52,7 +50,6 @@ html, body {
     background-color: #004080; 
   }
   
-  /* Responsive Design */
   @media (max-width: 768px) {
     .result-container {
       padding: 20px;

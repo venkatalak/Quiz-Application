@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './Result.css'; // Ensure you have this CSS file
+import './Result.css'; 
 
 function Result() {
   const { score } = useParams();
   const [latestScore, setLatestScore] = useState(null);
-  const navigate = useNavigate(); // To navigate to another page
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchLatestScore = async () => {
