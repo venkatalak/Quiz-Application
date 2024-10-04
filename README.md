@@ -31,4 +31,8 @@ An interactive quiz application with Google authentication and various topic sel
 - Google Authentication
 - Axios (for API calls)
 
+## Assumptions
 
+- While storing score user_id is NULL because currenty we are not stroing
+- User will not be able to go back to the previous question once the question is answered.
+  
