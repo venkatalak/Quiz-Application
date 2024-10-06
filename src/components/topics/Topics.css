@@ -1,24 +1,28 @@
+/* Reset margins and paddings to prevent overflow */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
   
+  /* Ensure body takes full height and no scroll */
   html, body {
     height: 100%;
-    overflow: hidden; 
+    overflow: hidden; /* Prevent body from scrolling */
   }
   
+  /* Ensure the container takes full viewport height and centers content */
   .topics-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 100vh; /* Minimum height set to viewport height */
     background-color: #e7d9ea;
-    padding: 20px; 
+    padding: 20px; /* Add some padding to prevent content from touching edges */
   }
   
+  /* Style the heading */
   h1 {
     font-size: 28px;
     color: #333;
@@ -26,12 +30,14 @@
     text-align: center;
   }
   
+  /* Style the list of topics */
   .topics-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
   }
   
+  /* Style each topic item */
   .topics-list li {
     background-color: #fff;
     padding: 15px 30px;
@@ -43,10 +49,11 @@
     cursor: pointer;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
-    width: 100%; 
-    max-width: 400px; 
+    width: 100%; /* Make the list item responsive */
+    max-width: 400px; /* Limit the width to prevent overflow */
   }
-
+  
+  /* Add a hover effect for the list items */
   .topics-list li:hover {
     background-color: #dda6ea;
     color: white;

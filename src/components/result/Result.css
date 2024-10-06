@@ -4,7 +4,7 @@ html, body {
   }
   
   .result-container {
-    display: flex; 
+    display: flex;
     flex-direction: column; 
     justify-content: center; 
     align-items: center; 
@@ -14,21 +14,21 @@ html, body {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     width: 90%;
     max-width: 600px;
-    margin: auto; 
+    margin:auto; 
     text-align: center;
     font-family: 'Arial', sans-serif; 
     transition: all 0.3s ease;
-    height: calc(100vh - 100px); 
+    /* height: calc(100vh - 100px);  */
+    margin-top: 10%;
   }
   
-
+ 
   .score-heading {
     font-size: 28px;
     color: #333;
     font-weight: 700;
     margin-bottom: 20px;
   }
-  
   
   .try-again-button {
     background-color: #007bff; 
@@ -39,7 +39,8 @@ html, body {
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    width: 100%; 
+    width: 70%; 
+    
   }
   
   .try-again-button:hover {
@@ -51,7 +52,7 @@ html, body {
     background-color: #004080; 
   }
   
-  
+  /* Responsive Design */
   @media (max-width: 768px) {
     .result-container {
       padding: 20px;

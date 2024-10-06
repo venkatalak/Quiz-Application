@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './Quiz.css'; // Ensure this path is correct
+import './Quiz.css';
 
 function Quiz() {
   const { topic } = useParams();
@@ -12,38 +12,12 @@ function Quiz() {
   const [hoveredOption, setHoveredOption] = useState(null);
   const navigate = useNavigate();
 
-  // Define question levels
-  const levels = [
-    { range: [0, 3], label: 'Beginner' },
-    { range: [4, 6], label: 'Intermediate' },
-    { range: [7, 9], label: 'Professional' }
-  ];
-
-  const levelColors = {
-    Beginner: {
-      bgColor: "#deda6f",
-      activeColor: "#787409"
-    },
-    Intermediate: {
-      bgColor: "#6fa3de",
-      activeColor: "#094a78"
-    },
-    Professional: {
-      bgColor: "#b5d45c",
-      activeColor: "#5b780c"
-    }
-  };
-
+  // Fetch questions based on the topic
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        console.log('Fetching questions for topic:', topic);
         const response = await axios.get(`http://localhost/quiz-application-backend/fetch-questions.php?topic=${topic}`);
-        if (Array.isArray(response.data)) {
-          setQuestions(response.data);
-        } else {
-          console.error('Unexpected response format:', response.data);
-        }
+        setQuestions(response.data);
       } catch (error) {
         console.error('Error fetching questions:', error);
       }
@@ -52,45 +26,39 @@ function Quiz() {
     fetchQuestions();
   }, [topic]);
 
-  const getLevel = () => {
-    const level = levels.find(l => currentQuestion >= l.range[0] && currentQuestion <= l.range[1]);
-    return level ? level.label : '';
-  };
-
   const handleAnswer = (index) => {
-    console.log(questions[currentQuestion].correct_answer,index);
     if (questions[currentQuestion].correct_answer === index) {
       setScore(score + 1);
     }
-   console.log(score);
 
     const nextQuestion = currentQuestion + 1;
     if (nextQuestion < questions.length) {
       setCurrentQuestion(nextQuestion);
       setHoveredOption(null);
     } else {
-      postScore();
       setIsFinished(true);
     }
   };
 
-  const postScore = async () => {
-    try {
-      await axios.post('http://localhost/quiz-application-backend/score.php', {
-        score,
-        topic
-      });
-      console.log('Score posted successfully:', score);
-    } catch (error) {
-      console.error('Error saving score:', error);
-    }
-  };
-
+  // Post score to the backend when the quiz finishes
   useEffect(() => {
     if (isFinished) {
-      navigate(`/result/${score}`);
+      const postScore = async () => {
+        try {
+          await axios.post('http://localhost/quiz-application-backend/score.php', {
+            score: score,
+            topic: topic
+          });
+          navigate(`/result/${topic}`); // Redirect to result page after posting score
+          console.log(score);
+        } catch (error) {
+          console.error('Error posting score:', error);
+        }
+      };
+
+      postScore();
     }
-  }, [isFinished, navigate, score]);
+  }, [isFinished, score, topic, navigate]);
 
   return (
     <div className='quiz-page-bg'>
@@ -98,14 +66,10 @@ function Quiz() {
         {questions.length > 0 ? (
           <>
             <h2>Topic: {topic}</h2>
-            <h4>Level: {getLevel()}</h4>
             <h3>Question {currentQuestion + 1} of {questions.length}</h3>
             <p>{questions[currentQuestion].question}</p>
             <div className="options-container">
               {questions[currentQuestion].options.map((option, index) => {
-                const currentLevel = questions[currentQuestion].level;
-                const isHovered = hoveredOption === index;
-                
                 return (
                   <button
                     key={index}
@@ -113,11 +77,6 @@ function Quiz() {
                     onMouseEnter={() => setHoveredOption(index)}
                     onMouseLeave={() => setHoveredOption(null)}
                     className="option-button"
-                    style={{
-                      backgroundColor: isHovered
-                        ? levelColors[currentLevel].activeColor
-                        : levelColors[currentLevel].bgColor
-                    }}
                   >
                     {option}
                   </button>

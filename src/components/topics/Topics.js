@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; 
-import './Topics.css'; 
+import axios from 'axios'; // Import Axios
+import './Topics.css'; // Import the CSS file
 
 function Topics() {
   const [topics, setTopics] = useState([]);
@@ -9,15 +9,15 @@ function Topics() {
 
   const fetchTopics = async () => {
     try {
-      const response = await axios.get('http://localhost/quiz-application-backend/fetch-topics.php');
-      console.log(response.data); // Check what the data looks like
-      setTopics(response.data);
+      const response = await axios.get('http://localhost/quiz-application-backend/fetch-topics.php'); // Adjust the URL to your backend
+      setTopics(response.data.map(topic => topic.name)); // Assuming your backend returns an array of objects with a 'name' property
     } catch (error) {
       console.error('Error fetching topics:', error);
     }
   };
-  
+
   useEffect(() => {
+    
     fetchTopics();
   }, []);
 
@@ -25,12 +25,12 @@ function Topics() {
     <div className="topics-container">
       <h1>Choose your Topic</h1>
       <ul className="topics-list">
-  {topics.map((topic) => (
-    <li key={topic.id} onClick={() => navigate(`/quiz/${topic.name}`)}>
-      {topic.name} {/* Ensure this is a string */}
-    </li>
-  ))}
-</ul>
+        {topics.map((topic, index) => (
+          <li key={index} onClick={() => navigate(`/quiz/${topic}`)}>
+            {topic}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
