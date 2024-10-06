@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Import Axios
 import './Topics.css'; // Import the CSS file
 
 function Topics() {
   const [topics, setTopics] = useState([]);
   const navigate = useNavigate();
 
+  const fetchTopics = async () => {
+    try {
+      const response = await axios.get('http://localhost/quiz-application-backend/fetch-topics.php'); // Adjust the URL to your backend
+      setTopics(response.data.map(topic => topic.name)); // Assuming your backend returns an array of objects with a 'name' property
+    } catch (error) {
+      console.error('Error fetching topics:', error);
+    }
+  };
+
   useEffect(() => {
-    // Mocking API call for topics (replace with axios.get('/api/topics'))
-    const mockTopics = ['Sports', 'Science & Technology', 'Arts', 'Politics'];
-    setTopics(mockTopics);
+    
+    fetchTopics();
   }, []);
 
   return (
@@ -27,5 +36,3 @@ function Topics() {
 }
 
 export default Topics;
-
-
