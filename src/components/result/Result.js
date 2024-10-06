@@ -1,32 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import './Result.css'; 
 
 function Result() {
   const { score } = useParams();
   const [latestScore, setLatestScore] = useState(null);
-  const navigate = useNavigate(); 
+  const [topic, setTopic] = useState('');
+
+  useEffect(() => {
+    setTopic(score); 
+  }, [score]);
 
   useEffect(() => {
     const fetchLatestScore = async () => {
-      try {
-        const response = await axios.get(`http://localhost/quiz-application-backend/result.php?topic=${score}`);
-        setLatestScore(response.data.score);
-      } catch (error) {
-        console.error('Error fetching latest score:', error);
+      if (topic) { 
+        try {
+          const response = await axios.get(`http://localhost/quiz-application-backend/result.php?topic=${topic}`);
+          console.log(response);
+          setLatestScore(response.data.score); 
+          
+        } catch (error) {
+          console.error('Error fetching latest score:', error);
+        }
       }
     };
 
-    fetchLatestScore();
-  }, [score]);
+    fetchLatestScore(); 
+  }, [topic]);
 
   return (
-    <div className="result-container">
-      <h1>Your Score: {latestScore !== null ? latestScore : 'Loading...'}</h1>
-      <button className="try-again-button" onClick={() => navigate('/topics')}>
-        Try Again
-      </button>
+    <div>
+      <h1>Your Score: {score}</h1>
+      {latestScore && <h2>Latest Score for {topic}: {latestScore}</h2>}
     </div>
   );
 }

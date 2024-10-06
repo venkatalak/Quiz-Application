@@ -9,15 +9,15 @@ function Topics() {
 
   const fetchTopics = async () => {
     try {
-      const response = await axios.get('http://localhost/quiz-application-backend/fetch-topics.php'); 
-      setTopics(response.data.map(topic => topic.name)); 
+      const response = await axios.get('http://localhost/quiz-application-backend/fetch-topics.php');
+      console.log(response.data); 
+      setTopics(response.data);
     } catch (error) {
       console.error('Error fetching topics:', error);
     }
   };
-
+  
   useEffect(() => {
-    
     fetchTopics();
   }, []);
 
@@ -25,12 +25,12 @@ function Topics() {
     <div className="topics-container">
       <h1>Choose your Topic</h1>
       <ul className="topics-list">
-        {topics.map((topic, index) => (
-          <li key={index} onClick={() => navigate(`/quiz/${topic}`)}>
-            {topic}
-          </li>
-        ))}
-      </ul>
+  {topics.map((topic) => (
+    <li key={topic.id} onClick={() => navigate(`/quiz/${topic.name}`)}>
+      {topic.name} 
+    </li>
+  ))}
+</ul>
     </div>
   );
 }

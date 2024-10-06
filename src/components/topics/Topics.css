@@ -14,7 +14,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; 
+    min-height: 100vh;
     background-color: #e7d9ea;
     padding: 20px; 
   }
@@ -46,7 +46,6 @@
     width: 100%; 
     max-width: 400px; 
   }
-  
   .topics-list li:hover {
     background-color: #dda6ea;
     color: white;
